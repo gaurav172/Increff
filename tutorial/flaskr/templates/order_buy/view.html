@@ -22,7 +22,7 @@
                     <td>{{item.date}}</td>
                     <td>{{item.time}}</td>
                     <td>{{item.status}}</td>
-                    <td> <!-- <a href="{{url_for('buyer.meal',id=item.buffetNo)}}"> -->View Details<!-- </a> --> </td>
+                    <td> <a href="{{url_for('order_buyer.details',id=item.orderid)}}">View Details<!-- </a> --> </td>
                 </tr>
           {% endfor %}
         </table>

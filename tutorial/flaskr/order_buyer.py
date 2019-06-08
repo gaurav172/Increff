@@ -48,3 +48,11 @@ def view():
     db = get_db()
     g.orderList=  db.execute("SELECT * FROM orderhistory WHERE buyername=?", (g.user['username'],)).fetchall()
     return render_template("order_buy/view.html")
+
+@bp.route("/details<id>")
+def details(id):
+    db = get_db()
+    print(id)
+    g.orderDetail=  db.execute("SELECT * FROM orderdish WHERE orderid=?", (id,)).fetchall()
+    print(g.orderDetail)
+    return render_template("order_buy/details.html")

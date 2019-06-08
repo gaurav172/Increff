@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Order Details{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div>
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            {% for item in g.orderDetail %}
+                <tr>
+                    <td>{{item.itemName}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.qty}}</td>
+                </tr>
+          {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

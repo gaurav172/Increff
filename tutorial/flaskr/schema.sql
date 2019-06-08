@@ -81,7 +81,7 @@ CREATE TABLE orderdish(
 
 );
 
-CREATE TABLE buffethistory(
+CREATE TABLE buffethistory( 
   tid INTEGER PRIMARY KEY AUTOINCREMENT,
   invName TEXT NOT NULL,
   joName TEXT NOT NULL,
