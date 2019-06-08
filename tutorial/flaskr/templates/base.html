@@ -6,6 +6,7 @@
   <ul>
     {% if g.user %}
       <li><span>{{ g.user['username'] }}</span>
+        <li><a href="{{ url_for('auth.profile') }}">Profile</a>
         <li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a>
         <li><a href="{{ url_for('dish.addDish') }}">Add Dish</a>
         <li><a href="{{ url_for('dish.sell') }}">Sell</a>

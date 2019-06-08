@@ -120,6 +120,9 @@ def login():
 
     return render_template("auth/login.html")
 
+@bp.route("/profile")
+def profile():
+    return render_template("auth/profile.html")
 
 @bp.route("/logout")
 def logout():
