@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Meal Details{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h2>
+    Meal
+    <h4>Start Time: {{g.st}}</h4>
+    <h4>End Time: {{g.en}}</h4>
+    <h4>Price: {{g.pr}}</h4>
+    <h4>Seats Available: {{g.seat}}</h4>
+    <h4>Veg/Non-Veg/Mixed: {{g.tp}}</h4>
+</h2>
+<h2>
+    Menu
+    {% for item in g.menuL %}
+    <li>
+       <h4>{{item["itemName"]}}:{{item["type"]}}</h4>
+    </li>    
+    {% endfor %}
+</h2>
+{% endblock %}
