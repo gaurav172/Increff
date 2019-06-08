@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Order Details{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div>
+        OrderId : {{g.od.orderid}}
+        <br>
+        Buyer Name : {{g.od.buyerName}}
+        <br>
+        Status : {{g.od.status}}
+        <br>
+        price : {{g.od.price}}
+        <br>
+        date : {{g.od.date}}
+        <br>
+        time : {{g.od.time}}
+        <br>
+        Items:
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            {% for item in g.Dishes %}
+            <tr>
+                <td>{{item.itemName}}</td>
+                <td>{{item.qty}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form method="POST">
+            <label>Accept Order<input type="checkbox" name="decision" value="accept"></label>
+            <label>Reject Order<input type="checkbox" name="decision" value="reject"></label>
+            <input type="submit" value="submit">
+        </form>
+    </div>
+
+{% endblock %}

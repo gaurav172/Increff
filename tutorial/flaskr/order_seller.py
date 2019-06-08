@@ -41,3 +41,30 @@ def load_logged_in_user():
         g.user = (
             get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         )
+
+
+@bp.route('/View')
+def view():
+    db = get_db()
+    g.orderList = (db.execute("SELECT * FROM orderhistory WHERE sellername = ?",(g.user["username"],)))
+    return render_template("order_sell/view.html")
+
+
+@bp.route('/orderDetails<id>',methods=("GET","POST"))
+def orderDetails(id):
+    db = get_db()
+    if request.method == "POST":
+        dcs = request.form.getlist('decision')
+        if dcs[0] == "accept":
+            db.execute(
+                "UPDATE orderhistory SET STATUS='Confirmed' WHERE orderid = ? and STATUS = 'Pending'",(id,)
+            )
+        else :
+            db.execute(
+                "UPDATE orderhistory SET STATUS='Cancelled' WHERE orderid = ? and STATUS = 'Pending'",(id,)
+            )
+        db.commit()
+        return redirect(url_for('order_seller.view'))
+    g.od = (db.execute("SELECT * FROM orderhistory WHERE orderid = ?",(id,)).fetchone())
+    g.Dishes = (db.execute("SELECT * FROM orderdish WHERE orderid = ?",(id,)).fetchall())
+    return render_template("order_sell/orderDetails.html")
