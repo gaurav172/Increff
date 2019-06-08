@@ -6,8 +6,9 @@ DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS meal;
 DROP TABLE IF EXISTS sell;
 DROP TABLE IF EXISTS buffetdishes;
-DROP TABLE IF EXISTS dishhistory;
 DROP TABLE IF EXISTS buffethistory;
+DROP TABLE IF EXISTS orderhistory;
+DROP TABLE IF EXISTS orderdish;
 DROP TABLE IF EXISTS post;
 
 CREATE TABLE user (
@@ -66,14 +67,18 @@ CREATE TABLE orderhistory(
   buyerName TEXT NOT NULL,
   sellerName TEXT NOT NULL,
   status TEXT NOT NULL,
+  price TEXT NOT NULL,
   date TEXT NOT NULL,
   time TEXT NOT NULL
 );
 
 CREATE TABLE orderdish(
   orderid INTEGER NOT NULL,
-  itemName TEXT NOT NULL
+  itemName TEXT NOT NULL,
+  price TEXT NOT NULL,
   qty INTEGER NOT NULL,
+  PRIMARY KEY(orderid,itemName)
+
 );
 
 CREATE TABLE buffethistory(
@@ -81,6 +86,7 @@ CREATE TABLE buffethistory(
   invName TEXT NOT NULL,
   joName TEXT NOT NULL,
   total INTEGER NOT NULL,
+  price TEXT NOT NULL,
   date TEXT NOT NULL,
   time TEXT NOT NULL
 );
