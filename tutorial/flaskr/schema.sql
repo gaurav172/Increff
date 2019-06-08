@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS meal;
+DROP TABLE IF EXISTS sell;
 DROP TABLE IF EXISTS buffetdishes;
 DROP TABLE IF EXISTS dishhistory;
 DROP TABLE IF EXISTS buffethistory;
@@ -23,6 +24,15 @@ CREATE TABLE user (
 );
 
 CREATE TABLE item (
+  name TEXT NOT NULL,
+  sellerUsername TEXT NOT NULL,
+  price INTEGER,
+  description TEXT,
+  type TEXT,
+  PRIMARY KEY(name,sellerusername)
+);
+
+CREATE TABLE sell (
   name TEXT NOT NULL,
   sellerUsername TEXT NOT NULL,
   price INTEGER ,
