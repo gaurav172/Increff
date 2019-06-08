@@ -8,6 +8,7 @@
       <li><span>{{ g.user['username'] }}</span>
         <li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a>
         <li><a href="{{ url_for('dish.addDish') }}">Add Dish</a>
+        <li><a href="{{ url_for('dish.sell') }}">Sell</a>
         <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
     {% else %}
       <li><a href="{{ url_for('auth.register') }}">Register</a>

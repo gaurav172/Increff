@@ -65,3 +65,19 @@ def addDish():
         db.commit()
         return redirect(url_for("dish.mydishes"))
     return render_template("dish/addDish.html")
+
+@bp.route("/sell",methods=("GET", "POST"))
+def sell():
+    db = get_db()
+    g.dishList = ( db.execute("SELECT * FROM item WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
+    if request.method == "POST" :
+        dishes = request.form.getlist('name')
+        # print(dishes)
+        for x in dishes:       
+            db.execute(
+                "INSERT INTO sell (name,sellerUsername,price,qAvail,readyTime,sellingTill,description,type) VALUES (?,?,?,?,?,?,?,?)",
+                (x,g.user['username'],20,5,"buy","timesell","desc","veg"),
+            )
+            db.commit()
+        return redirect(url_for("dish.sell"))
+    return render_template("dish/sell.html")    
