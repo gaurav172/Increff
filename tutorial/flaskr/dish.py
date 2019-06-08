@@ -91,3 +91,37 @@ def sell():
             db.commit()
         return redirect(url_for("dish.sell"))
     return render_template("dish/sell.html")    
+
+@bp.route("/mealInvites")
+def mealInvites():
+    return render_template("dish/mealInvites.html")
+
+
+@bp.route("/addInvite",methods=("GET","POST"))
+def addInvite():
+    db = get_db()
+    g.dL = ( db.execute("SELECT * FROM item WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )    
+    if request.method == "POST":
+        dishes = request.form.getlist('name')
+        seats = request.form["seats"]
+        price = request.form["price"]
+        stime = request.form["stime"]
+        etime = request.form["etime"]
+        typ = request.form["type"]
+        # print(price)
+        # print(dishes)
+        db.execute(
+            "INSERT INTO meal (inviterName,price,startTime,endTime,seatAvail,type) VALUES(?,?,?,?,?,?)",
+            (g.user["username"],price,stime,etime,seats,typ)
+        )
+        bid = (db.execute("SELECT MAX(buffetNo) from meal").fetchone())
+        bid = bid[0]
+        db.commit()
+        for x in dishes:
+            tp = ( db.execute("SELECT type FROM item WHERE sellerusername = ? and name = ?",(g.user["username"],x)).fetchone() )[0]
+            db.execute(
+                "INSERT INTO buffetdishes (buffetNo,itemName,type) VALUES(?,?,?)",
+                (bid,x,tp)
+            )
+            db.commit()
+    return render_template("dish/addInvite.html")

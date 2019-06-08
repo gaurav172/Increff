@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Meal Invites{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h3>
+    <a href="{{url_for('dish.addInvite')}}">Create New Meal</a>
+</h3>
+{% endblock %}

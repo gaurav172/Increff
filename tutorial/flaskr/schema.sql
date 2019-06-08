@@ -45,8 +45,8 @@ CREATE TABLE sell (
 );
 
 CREATE TABLE meal (
+  buffetNo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   inviterName TEXT NOT NULL,
-  buffetNo INTEGER NOT NULL PRIMARY KEY,
   price INTEGER NOT NULL,
   startTime TEXT NOT NULL,
   endTime TEXT NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE meal (
 
 CREATE TABLE buffetdishes(
   buffetNo INTEGER NOT NULL,
-  itemName INTEGER NOT NULL,
+  itemName TEXT NOT NULL,
   type TEXT NOT NULL,
   PRIMARY KEY(buffetno,itemname)
 );
