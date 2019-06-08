@@ -111,7 +111,15 @@ def mealInvites():
 
 @bp.route("/mealMenu<id>")
 def mealMenu(id):
-    return id
+    db = get_db()
+    B = (db.execute("SELECT * FROM meal WHERE buffetNo = ?",(id)).fetchone())
+    g.st = B["startTime"]
+    g.en = B["endTime"]
+    g.pr = B["price"]
+    g.seat = B["seatAvail"]
+    g.tp = B["type"]
+    g.menuL = (db.execute("SELECT * FROM buffetdishes WHERE buffetNo = ?",(id)).fetchall())
+    return render_template("dish/mealMenu.html")
 
 @bp.route("/addInvite",methods=("GET","POST"))
 def addInvite():
