@@ -99,10 +99,19 @@ def salelist():
     g.sellList = ( get_db().execute("SELECT * FROM sell WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
     print(g.sellList)
     return render_template("dish/salelist.html")
+
+
+
 @bp.route("/mealInvites")
 def mealInvites():
+    db = get_db()
+    g.menuList = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(g.user["username"],)).fetchall())
     return render_template("dish/mealInvites.html")
 
+
+@bp.route("/mealMenu<id>")
+def mealMenu(id):
+    return id
 
 @bp.route("/addInvite",methods=("GET","POST"))
 def addInvite():
