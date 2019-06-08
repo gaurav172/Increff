@@ -92,6 +92,13 @@ def sell():
         return redirect(url_for("dish.sell"))
     return render_template("dish/sell.html")    
 
+
+@bp.route("/salelist")
+def salelist():
+    db = get_db()
+    g.sellList = ( get_db().execute("SELECT * FROM sell WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
+    print(g.sellList)
+    return render_template("dish/salelist.html")
 @bp.route("/mealInvites")
 def mealInvites():
     return render_template("dish/mealInvites.html")
