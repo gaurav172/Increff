@@ -72,11 +72,21 @@ def sell():
     g.dishList = ( db.execute("SELECT * FROM item WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
     if request.method == "POST" :
         dishes = request.form.getlist('name')
-        # print(dishes)
+        quantity = request.form["quantity"]
+        stime = request.form["stime"]
+        etime = request.form["etime"]
+        print(dishes)
         for x in dishes:       
+            print(x)
+            price= ( db.execute("SELECT price FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            description= ( db.execute("SELECT description FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            typ= ( db.execute("SELECT type FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            price=price[0]
+            description=description[0]
+            typ=typ[0]
             db.execute(
                 "INSERT INTO sell (name,sellerUsername,price,qAvail,readyTime,sellingTill,description,type) VALUES (?,?,?,?,?,?,?,?)",
-                (x,g.user['username'],20,5,"buy","timesell","desc","veg"),
+                (x,g.user['username'],price,quantity,etime,stime,description,typ)
             )
             db.commit()
         return redirect(url_for("dish.sell"))
