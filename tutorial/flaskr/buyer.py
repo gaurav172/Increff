@@ -80,6 +80,7 @@ def menu(uname):
         return redirect(url_for("dish.sell"))
     return render_template("buyer/menu.html")
 
+
 @bp.route("/sell",methods=("GET", "POST"))
 def sell():
     db = get_db()
@@ -105,4 +106,22 @@ def sell():
             db.commit()
         return redirect(url_for("dish.sell"))
     return render_template("dish/sell.html")  
+
+
+@bp.route("/meal<id>")
+def meal(id):
+    db = get_db()
+    g.meal = (db.execute("SELECT * FROM meal WHERE buffetNo=?",(id,)).fetchone())
+    g.Menu = (db.execute("SELECT * FROM buffetdishes WHERE buffetNo=?",(id,)).fetchall())
+    return render_template("buyer/meal.html")
+
+@bp.route("/joinMeal")
+def joinMeal():
+    db = get_db()
+    userList = ( db.execute("SELECT username FROM user", ).fetchall() )
+    userDict = {}
+    for x in userList:
+        userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(x[0],)).fetchall())
+    g.mealDict = userDict
+    return render_template("buyer/joinMeal.html")
 

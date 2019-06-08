@@ -13,6 +13,7 @@
         <li><a href="{{ url_for('dish.mealInvites') }}">Meal Invite</a>
         <li><a href="{{ url_for('dish.sell') }}">Sell items</a>
         <li><a href="{{ url_for('buyer.order') }}">Order</a>
+        <li><a href="{{ url_for('buyer.joinMeal') }}">Join Meal</a>
         <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
     {% else %}
       <li><a href="{{ url_for('auth.register') }}">Register</a>
