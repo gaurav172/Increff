@@ -87,8 +87,17 @@ def menu(uname):
     return render_template("buyer/menu.html")
 
 
-@bp.route("/meal<id>")
+@bp.route("/meal<id>",methods=("GET","POST"))
 def meal(id):
+    if request.method == "POST":
+        seats = request.form["seats"]
+        db = get_db()
+        ml = (db.execute("SELECT * FROM meal WHERE buffetNo=?",(id,)).fetchone())
+        db.execute(
+            "INSERT INTO buffethistory (invName,joName,total,price,date,time) VALUES (?,?,?,?,?,?)",
+            (ml["inviterName"],g.user["username"],seats,int(seats)*int(ml["price"]),"date","time")
+        )
+        db.commit()
     db = get_db()
     g.meal = (db.execute("SELECT * FROM meal WHERE buffetNo=?",(id,)).fetchone())
     g.Menu = (db.execute("SELECT * FROM buffetdishes WHERE buffetNo=?",(id,)).fetchall())
