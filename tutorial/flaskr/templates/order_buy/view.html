@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}My orders{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+    <div>
+        <table>
+            <tr>
+                <th>OrderId</th>
+                <th>Seller Name</th>
+                <th>Price</th>
+                <th>date</th>
+                <th>time</th>
+                <th>status</th>
+            </tr>
+            {% for item in g.orderList %}
+                <tr>
+                    <td>{{item.orderid}}</td>
+                    <td>{{item.sellerName}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.date}}</td>
+                    <td>{{item.time}}</td>
+                    <td>{{item.status}}</td>
+                    <td> <!-- <a href="{{url_for('buyer.meal',id=item.buffetNo)}}"> -->View Details<!-- </a> --> </td>
+                </tr>
+          {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
