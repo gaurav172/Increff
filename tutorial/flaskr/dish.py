@@ -44,6 +44,8 @@ def load_logged_in_user():
 
 @bp.route("/mydishes")
 def mydishes():
+    db = get_db()
+    g.myDishes = ( get_db().execute("SELECT * FROM item WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
     return render_template("dish/mydishes.html")
 
 @bp.route("/addDish",methods=("GET", "POST"))
