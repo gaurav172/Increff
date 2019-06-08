@@ -61,16 +61,19 @@ CREATE TABLE buffetdishes(
   PRIMARY KEY(buffetno,itemname)
 );
 
-CREATE TABLE dishhistory(
-  tid INTEGER PRIMARY KEY AUTOINCREMENT,
-  orderid INTEGER NOT NULL,
-  itemName TEXT NOT NULL,
+CREATE TABLE orderhistory(
+  orderid INTEGER PRIMARY KEY AUTOINCREMENT,
   buyerName TEXT NOT NULL,
   sellerName TEXT NOT NULL,
   status TEXT NOT NULL,
-  qty INTEGER NOT NULL,
   date TEXT NOT NULL,
   time TEXT NOT NULL
+);
+
+CREATE TABLE orderdish(
+  orderid INTEGER NOT NULL,
+  itemName TEXT NOT NULL
+  qty INTEGER NOT NULL,
 );
 
 CREATE TABLE buffethistory(
