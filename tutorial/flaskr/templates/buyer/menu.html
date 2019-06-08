@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Order Food now{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+	<h1> {{ g.seller }} </h1>
+	<form method="post">
+		{%	for item in g.userDish	%}
+			<li>
+		        <label> {{item.name}} {{item.price}}  {{item.description}}  {{item.type}}<input type="checkbox" name="name"  value={{item.name}} > </label>
+			</li>
+		 {%	endfor	%}
+	<input type="submit" value="Confirm buying">
+	</form>
+{% endblock %}

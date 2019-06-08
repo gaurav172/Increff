@@ -44,4 +44,18 @@ def load_logged_in_user():
 @bp.route("/order")
 def order():
     db = get_db()
+    userList = ( get_db().execute("SELECT username FROM user", ).fetchall() )
+    userDict = {}
+    # print(size(userList))
+    for x in userList:
+        # print(x[0])
+        userDict[x[0]]= ( get_db().execute("SELECT name FROM sell WHERE sellerUsername = ?", (x[0],)).fetchall() )
+    g.uDict = userDict
+    # print(userDict)
     return render_template("buyer/order.html")
+
+@bp.route("/menu<uname>")
+def menu(uname):
+    g.seller = uname
+    g.userDish = ( get_db().execute("SELECT * FROM item WHERE sellerUsername=?", (uname,) ).fetchall() )
+    return render_template("buyer/menu.html")
