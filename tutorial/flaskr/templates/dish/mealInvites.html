@@ -5,6 +5,24 @@
 {% endblock %}
 
 {% block content %}
+<h2>
+    Meals 
+    <table>
+        <tr>
+            <td>Start Time</td>
+            <td>End Time</td>
+            <td>Veg/Non-Veg/Mixed</td>
+        </tr>
+        {% for item in g.menuList %}
+        <tr>
+            <td>{{item.startTime}}</td>
+            <td>{{item.endTime}}</td>
+            <td>{{item.type}}</td>
+            <td><a href="{{url_for('dish.mealMenu',id=item.buffetNo)}}">View Menu</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</h2>
 <h3>
     <a href="{{url_for('dish.addInvite')}}">Create New Meal</a>
 </h3>
