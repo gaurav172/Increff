@@ -17,7 +17,15 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 
 def login_required(view):
-    """View decorator that redirects anonymous users to the login page."""
+    """View decorator that
+CREATE TABLE buffethistory(
+  tid INTEGER PRIMARY KEY AUTOINCREMENT,
+  invName TEXT NOT NULL,
+  joName TEXT NOT NULL,
+  total INTEGER NOT NULL,
+  date TEXT NOT NULL,
+  time TEXT NOT NULL
+); redirects anonymous users to the login page."""
 
     @functools.wraps(view)
     def wrapped_view(**kwargs):
@@ -51,8 +59,12 @@ def register():
     password for security.
     """
     if request.method == "POST":
-        username = request.form["username"]
         password = request.form["password"]
+        username = request.form["username"]
+        name = request.form["name"]
+        address = request.form["address"]
+        locality = request.form["locality"]
+        contact = request.form["contact"]
         db = get_db()
         error = None
 
@@ -70,8 +82,8 @@ def register():
             # the name is available, store it in the database and go to
             # the login page
             db.execute(
-                "INSERT INTO user (username, password) VALUES (?, ?)",
-                (username, generate_password_hash(password)),
+                "INSERT INTO user (username,name, password,address,locality,ratingSum,totRatings,contact) VALUES (?,?,?,?,?,?,?,?)",
+                (username,name, generate_password_hash(password),address,locality,0,0,contact),
             )
             db.commit()
             return redirect(url_for("auth.login"))

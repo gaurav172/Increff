@@ -12,13 +12,14 @@ DROP TABLE IF EXISTS post;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
   password TEXT NOT NULL,
   address TEXT NOT NULL,
   locality TEXT NOT NULL,
   ratingSum INTEGER,
   totRatings INTEGER,
-  contact TEXT NOT NULL,
-  description TEXT NOT NULL
+  contact TEXT NOT NULL
+  -- description TEXT NOT NULL
 );
 
 CREATE TABLE item (
