@@ -54,8 +54,55 @@ def order():
     # print(userDict)
     return render_template("buyer/order.html")
 
-@bp.route("/menu<uname>")
+@bp.route("/menu<uname>",methods=("GET", "POST"))
 def menu(uname):
     g.seller = uname
-    g.userDish = ( get_db().execute("SELECT * FROM item WHERE sellerUsername=?", (uname,) ).fetchall() )
+    g.userDish = (  get_db().execute("SELECT * FROM item WHERE sellerUsername=?", (uname,) ).fetchall() )
+    if request.method == "POST" :
+        dishes = request.form.getlist('name')
+        quantity = request.form["quantity"]
+        stime = request.form["stime"]
+        etime = request.form["etime"]
+        print(dishes)
+        for x in dishes:       
+            print(x)
+            price= ( db.execute("SELECT price FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            description= ( db.execute("SELECT description FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            typ= ( db.execute("SELECT type FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            price=price[0]
+            description=description[0]
+            typ=typ[0]
+            db.execute(
+                "INSERT INTO sell (name,sellerUsername,price,qAvail,readyTime,sellingTill,description,type) VALUES (?,?,?,?,?,?,?,?)",
+                (x,g.user['username'],price,quantity,etime,stime,description,typ)
+            )
+            db.commit()
+        return redirect(url_for("dish.sell"))
     return render_template("buyer/menu.html")
+
+@bp.route("/sell",methods=("GET", "POST"))
+def sell():
+    db = get_db()
+    g.dishList = ( db.execute("SELECT * FROM item WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
+    if request.method == "POST" :
+        dishes = request.form.getlist('name')
+        quantity = request.form["quantity"]
+        stime = request.form["stime"]
+        etime = request.form["etime"]
+        print(dishes)
+        for x in dishes:       
+            print(x)
+            price= ( db.execute("SELECT price FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            description= ( db.execute("SELECT description FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            typ= ( db.execute("SELECT type FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
+            price=price[0]
+            description=description[0]
+            typ=typ[0]
+            db.execute(
+                "INSERT INTO sell (name,sellerUsername,price,qAvail,readyTime,sellingTill,description,type) VALUES (?,?,?,?,?,?,?,?)",
+                (x,g.user['username'],price,quantity,etime,stime,description,typ)
+            )
+            db.commit()
+        return redirect(url_for("dish.sell"))
+    return render_template("dish/sell.html")  
+
