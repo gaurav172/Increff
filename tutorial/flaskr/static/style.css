@@ -1,143 +1,74 @@
-html {
-  font-family: sans-serif;
-  background: #eee;
-  padding: 1rem;
+ body {
+ /*background-image: url("https://i.pinimg.com/originals/a7/16/be/a716bef1009b73c3f3b80ee549c2ff3b.jpg");*/
+ background-color: #FFA500;
 }
-
-body {
-  max-width: 960px;
-  margin: 0 auto;
-  background: white;
+div.base{
+  position: absolute;
+  top:0%;
+  left:0%;
+  display:block;
+  height: 0%;
+  width: 100%;
+  /*padding: 0px 0px 0px 0px*/
 }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: serif;
-  color: #377ba8;
-  margin: 1rem 0;
-}
-
-a {
-  color: #377ba8;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid lightgray;
-}
-
-nav {
-  background: lightgray;
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-}
-
-nav h1 {
-  flex: auto;
-  margin: 0;
-}
-
-nav h1 a {
-  text-decoration: none;
-  padding: 0.25rem 0.5rem;
-}
-
-nav ul  {
-  display: flex;
-  list-style: none;
+ul {
+  list-style-type: none;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 
-nav ul li a, nav ul li span, header .action {
+li {
+  float: right;
+}
+
+li a {
   display: block;
-  padding: 0.5rem;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
 
-.content {
-  padding: 0 1rem 1rem;
-}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: red;
+} 
 
-.content > header {
-  border-bottom: 1px solid lightgray;
-  display: flex;
-  align-items: flex-end;
+div.profile{
+  position:absolute;
+  top:35.7%;
+  right:0%;
+  align-items: center;  
+  margin-top:-300px; /* this is half the height of your div*/  
+  margin-left:-100px; 
+  background-color:Red ;
+  border: 2 px solid black;
+  font-size: 30px;
+  font-family: sans-serif;
+  padding: 100px 150px 600px 100px
 }
-
-.content > header h1 {
-  flex: auto;
-  margin: 1rem 0 0.25rem 0;
+.tab {
+    background-color: white;  
+    position: centre; 
+    /*left:40%;*/
+    /*top:10%;*/
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 33px Arial, sans-serif;
 }
-
-.flash {
-  margin: 1em 0;
-  padding: 1em;
-  background: #cae6f6;
-  border: 1px solid #377ba8;
+.tab thead th{
+    background-color:Black  ;
+    border: solid 1px #DDEEEE;
+    color: white;
+    padding: 20px;
+    text-align: left;
+    /*text-shadow: 1px 1px 1px #fff;*/
 }
-
-.post > header {
-  display: flex;
-  align-items: flex-end;
-  font-size: 0.85em;
-}
-
-.post > header > div:first-of-type {
-  flex: auto;
-}
-
-.post > header h1 {
-  font-size: 1.5em;
-  margin-bottom: 0;
-}
-
-.post .about {
-  color: slategray;
-  font-style: italic;
-}
-
-.post .body {
-  white-space: pre-line;
-}
-
-.content:last-child {
-  margin-bottom: 0;
-}
-
-.content form {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.content label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-.content input, .content textarea {
-  margin-bottom: 1em;
-}
-
-.content textarea {
-  min-height: 12em;
-  resize: vertical;
-}
-
-input.danger {
-  color: #cc2f2e;
-}
-
-input[type=submit] {
-  align-self: start;
-  min-width: 10em;
-}
-
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 15px;
+.tab tbody td {
+    border: solid    ;
+    color: Black;
+    padding: 10px;
 }

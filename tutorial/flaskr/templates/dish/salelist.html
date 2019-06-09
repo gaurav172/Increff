@@ -5,17 +5,20 @@
 {% endblock %}
 
 {% block content %}
-<table>
+<table class="tab">
+    <thead>
     <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <td>Start time</td>
-        <td>End time</td>
-        <td>Quantity remaining</td>
-        <td>Type</td>
-        <td>Price</td>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Start time</th>
+        <th>Enh time</th>
+        <th>Quantity remaining</th>
+        <th>Type</th>
+        <th>Price</th>
     </tr>
+    </thead>
     {% for item in g.sellList %}
+    <tbody>
     <tr>
         <td>{{item.name}}</td>
         <td>{{item.description}}</td>
@@ -25,6 +28,7 @@
         <td>{{item.type}}</td>
         <td>{{item.price}}</td>
     </tr>
+    </tbody>
     {% endfor %}
 </table>
 {% endblock %}

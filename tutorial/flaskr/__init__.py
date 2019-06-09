@@ -36,7 +36,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     # apply the blueprints to the app
-    from flaskr import auth, blog,dish,buyer,order_buyer,order_seller
+    from flaskr import blog,auth,dish,buyer,order_buyer,order_seller
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)

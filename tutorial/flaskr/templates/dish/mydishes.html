@@ -5,12 +5,15 @@
 {% endblock %}
 
 {% block content %}
-<table>
+<table class="tab">
+    <thead>
     <tr>
-        <td>Name</td>
-        <td>Description</td>
-        <td>Price</td>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
     </tr>
+    </thead>
+    <tbody>
     {% for item in g.myDishes %}
     <tr>
         <td>{{item.name}}</td>
@@ -18,5 +21,6 @@
         <td>{{item.price}}</td>
     </tr>
     {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

@@ -1,34 +1,38 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title>{% block title %}{% endblock %} - FoodCreff</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div class = "base">
 <nav>
-  <h1><a href="{{ url_for('index') }}">Flaskr</a></h1>
-  <ul>
+  <ul class="nav">
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-        <li><a href="{{ url_for('auth.profile') }}">Profile</a>
-        <li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a>
-        <li><a href="{{ url_for('dish.addDish') }}">Add Dish</a>
-        <li><a href="{{ url_for('dish.salelist') }}">My Items on sale</a>
-        <li><a href="{{ url_for('dish.mealInvites') }}">Meal Invite</a>
-        <li><a href="{{ url_for('dish.sell') }}">Sell items</a>
-        <li><a href="{{ url_for('buyer.order') }}">Order</a>
-        <li><a href="{{ url_for('buyer.joinMeal') }}">Join Meal</a>
-        <li><a href="{{ url_for('order_buyer.view') }}">my_bought_orders</a>
-        <li><a href="{{ url_for('order_seller.view') }}">my pending orders</a> </li>
-        <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      <!-- <li><span>{{ g.user['username'] }}</span> -->
+        <div><li style="float:left;font-size:120%"><a href="{{ url_for('index') }}">FoodCreff</a></div>
+        <div><li><a href="{{ url_for('auth.logout') }}">Log Out</a></div>
+        <div><li><a href="{{ url_for('auth.profile') }}">Profile</a></div>
+        <div><li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a></div>
+        <div><li><a href="{{ url_for('dish.addDish') }}">Add Dish</a></div>
+        <div><li><a href="{{ url_for('dish.salelist') }}">My Items on sale</a></div>
+        <div><li><a href="{{ url_for('dish.mealInvites') }}">Meal Invite</a></div>
+        <div><li><a href="{{ url_for('dish.sell') }}">Sell items</a></div>
+        <div><li><a href="{{ url_for('buyer.order') }}">Order</a></div>
+        <div><li><a href="{{ url_for('buyer.joinMeal') }}">Join Meal</a></div>
+        <div><li><a href="{{ url_for('order_buyer.view') }}">my_bought_orders</a></div>
+        <div><li><a href="{{ url_for('order_seller.view') }}">my pending orders</a> </li></div>
     {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+      <div><li><a href="{{ url_for('auth.register') }}">Register</a></div>
+      <div><li><a href="{{ url_for('auth.login') }}">Log In</a></div>
     {% endif %}
   </ul>
 </nav>
+</div>
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
+  <body>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
   {% block content %}{% endblock %}
+  </body>
 </section>
