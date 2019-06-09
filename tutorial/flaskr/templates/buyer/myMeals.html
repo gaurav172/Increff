@@ -10,7 +10,6 @@
         <thead>
             <tr>
                 <th>Inviter Name</th>
-                <th>Date</th>
                 <th>Time</th>
             </tr>
         </thead>
@@ -18,7 +17,6 @@
         {% for item in g.myMeals %}
             <tr>
                 <td>{{item.invName}}</td>
-                <td>{{item.date}}</td>
                 <td>{{item.time}}</td>
                 <!-- <td><a href="{{url_for('dish.mealMenu',id=item.buffetNo)}}">View Details</a></td> -->
             </tr>
