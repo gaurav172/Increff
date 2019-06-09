@@ -38,19 +38,18 @@ CREATE TABLE sell (
   sellerUsername TEXT NOT NULL,
   price INTEGER ,
   qAvail INTEGER,
-  readyTime TEXT,
-  sellingTill TEXT,
+  readyTime INTEGER,
+  sellingTill INTEGER,
   description TEXT,
   type TEXT,
-  PRIMARY KEY(name,sellerusername)
 );
 
 CREATE TABLE meal (
   buffetNo INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   inviterName TEXT NOT NULL,
   price INTEGER NOT NULL,
-  startTime TEXT NOT NULL,
-  endTime TEXT NOT NULL,
+  startTime INTEGER NOT NULL,
+  endTime INTEGER NOT NULL,
   seatAvail INTEGER NOT NULL,
   type TEXT NOT NULL
 );
@@ -68,8 +67,7 @@ CREATE TABLE orderhistory(
   sellerName TEXT NOT NULL,
   status TEXT NOT NULL,
   price TEXT NOT NULL,
-  date TEXT NOT NULL,
-  time TEXT NOT NULL
+  time INTEGER NOT NULL
 );
 
 CREATE TABLE orderdish(
@@ -87,8 +85,7 @@ CREATE TABLE buffethistory(
   joName TEXT NOT NULL,
   total INTEGER NOT NULL,
   price TEXT NOT NULL,
-  date TEXT NOT NULL,
-  time TEXT NOT NULL
+  time INTEGER NOT NULL
 );
 
 CREATE TABLE post (
