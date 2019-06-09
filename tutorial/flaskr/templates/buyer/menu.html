@@ -4,13 +4,13 @@
   <h1>{% block title %}Order Food now{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-	<h1> {{ g.seller }} </h1>
+	<h1 style="margin-left: 50%"> {{ g.seller }} </h1>
+	<div class="forms">
 	<form method="post">
 		{%	for item in g.userDish	%}
-			<li>
-		        <label> {{item.name}} {{item.price}}  {{item.description}}  {{item.type}}<input type="checkbox" name="name"  value={{item.name}} > </label>
-			</li>
+        <label for="name"> {{item.name}} Rs.{{item.price}} </label>	<input id="name" type="checkbox" name="name"  value={{item.name}} > 
 		 {%	endfor	%}
 	<input type="submit" value="Confirm buying">
 	</form>
+	</div>
 {% endblock %}

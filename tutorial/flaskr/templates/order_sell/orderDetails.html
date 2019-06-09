@@ -18,12 +18,15 @@
         time : {{g.od.time}}
         <br>
         Items:
-        <table>
+        <table class="tab">
+            <thead>
             <tr>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
             </tr>
+            </thead>
+            <tbody>
             {% for item in g.Dishes %}
             <tr>
                 <td>{{item.itemName}}</td>
@@ -31,6 +34,7 @@
                 <td>{{item.price}}</td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% if g.od.status == 'Pending' %}
         <form method="POST">

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="forms">
   <form method="post">
     {% for item in g.dishList %}
         <label>{{item.name}} <input type="checkbox" name="name"  value={{item.name}} > </label>
@@ -14,4 +15,5 @@
     <label for="etime">  End time</label><input type="number" name="etime" id="etime"  >
     <input type="submit" value="Add in my selling list">
   </form>
+</div>
 {% endblock %}

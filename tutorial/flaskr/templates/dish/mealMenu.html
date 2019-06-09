@@ -5,20 +5,22 @@
 {% endblock %}
 
 {% block content %}
-<h2>
-    Meal
-    <h4>Start Time: {{g.st}}</h4>
-    <h4>End Time: {{g.en}}</h4>
-    <h4>Price: {{g.pr}}</h4>
-    <h4>Seats Available: {{g.seat}}</h4>
-    <h4>Veg/Non-Veg/Mixed: {{g.tp}}</h4>
-</h2>
-<h2>
-    Menu
-    {% for item in g.menuL %}
-    <li>
-       <h4>{{item["itemName"]}}:{{item["type"]}}</h4>
-    </li>    
-    {% endfor %}
-</h2>
+<div class="meals">
+    <h2>
+        Meal Details
+        <br>
+        <font style="font-size: 30px">Start Time: {{g.st}}</font><br>
+        <font style="font-size: 30px">End Time: {{g.en}}</font><br>
+        <font style="font-size: 30px">Price: {{g.pr}}</font><br>
+        <font style="font-size: 30px">Seats Available: {{g.seat}}</font><br>
+        <font style="font-size: 30px">Veg/Non-Veg/Mixed: {{g.tp}}</font><br>
+    </h2>
+    <h2>
+        Menu
+        <br>
+        {% for item in g.menuL %}
+           <font style="font-size: 30px">{{item["itemName"]}} : {{item["type"]}}</font><br>
+        {% endfor %}
+    </h2>
+</div>
 {% endblock %}

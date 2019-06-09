@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+  <div class="forms">
   <form method="post">
     {% for item in g.dL %}
         <label>     {{item.name}} <input type="checkbox" name="name"  value={{item.name}} > </label>
@@ -13,7 +14,8 @@
     <label for="price">  Price </label><input type="number" name="price" id="price"  >     
     <label for="stime">  Start time </label><input type="number" name="stime" id="stime"  >
     <label for="etime">  End time</label><input type="number" name="etime" id="etime"  >
-    <label for="type">  Veg/Non-Veg/Mixed</label><input name="type" id="type"  >
+    <label for="type">  Veg/Non-Veg/Mixed</label><input type="text" name="type" id="type"  >
     <input type="submit" value="Add to Meal">
   </form>
+</div>
 {% endblock %}

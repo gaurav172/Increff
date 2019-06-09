@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block content %}
+<div class="forms">
   <form method="post">
     <label for="name">Name</label>
-    <input name="name" id="name" required>
+    <input type="text" name="name" id="name" required>
     <label for="price">Price</label>
     <input type="number" name="price" id="price" required>
     <label for="description">Description</label>
-    <input name="description" id="description" required>
+    <input type="text" name="description" id="description" required>
     <label for="type">Veg/Non-Veg/Egg</label>
-    <input name="type" id="type" required>
+    <input type="text" name="type" id="type" required>
     <input type="submit" value="Add"> 
   </form>
+</div>
 {% endblock %}

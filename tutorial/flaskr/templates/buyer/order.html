@@ -4,15 +4,14 @@
   <h1>{% block title %}Order Food now{% endblock %}</h1>
 {% endblock %}
 {% block content %}
+	<div class="meals">
 	{%	for user in g.uDict  %}
-
-	<div>
-		<h2>  <a href="{{url_for('buyer.menu',uname=user)}}">{{user}} </a> </h2>
-		ITEMS -
+		<a href="{{url_for('buyer.menu',uname=user)}}" style="font-size: 40px; margin-left: 0% ">{{user}} </a><br>
+		Menu -
 		{%	for x in g.uDict[user]	%}
 			 {{x[0]}}, 
 		{%	endfor %}
-	</div>
 	{%	endfor	%}
+	</div>
 
 {% endblock %}

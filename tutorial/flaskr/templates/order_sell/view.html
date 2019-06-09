@@ -5,7 +5,8 @@
 {% endblock %}
 {% block content %}
     <div>
-        <table>
+        <table class="tab">
+            <thead>
             <tr>
                 <th>OrderId</th>
                 <th>Buyer Name</th>
@@ -14,6 +15,8 @@
                 <th>time</th>
                 <th>status</th>
             </tr>
+            </thead>
+            <tbody>
             {% for item in g.orderList %}
                 <tr>
                     <td>{{item.orderid}}</td>
@@ -25,6 +28,7 @@
                     <td> <a href="{{url_for('order_seller.orderDetails',id=item.orderid)}}">View Details</a> </td>
                 </tr>
           {% endfor %}
+          </tbody>
         </table>
     </div>
 
