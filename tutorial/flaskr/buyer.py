@@ -41,15 +41,26 @@ def load_logged_in_user():
             get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         )
 
-@bp.route("/order")
+@bp.route("/order",methods=("GET","POST"))
 def order():
     db = get_db()
     userList = ( get_db().execute("SELECT username FROM user", ).fetchall() )
     userDict = {}
-    # print(size(userList))
+    lc = (db.execute("SELECT locality FROM user WHERE username=?",(g.user["username"],)).fetchone())[0]
+    if request.method == "POST":
+        tp = request.form["type"]
+        kword = request.form["search"]
+        if tp == "Dish":
+            global userList
+            userList = (get_db().execute("SELECT sellerUsername FROM sell WHERE name LIKE ('%' || ? || '%')",(kword,)).fetchall())
+        else:
+            global userList
+            userList = (get_db().execute("SELECT username FROM user WHERE username LIKE ('%' || ? || '%')",(kword,)).fetchall())
+    
     for x in userList:
-        # print(x[0])
-        userDict[x[0]]= ( get_db().execute("SELECT name FROM sell WHERE sellerUsername = ?", (x[0],)).fetchall() )
+        L = (db.execute("SELECT locality FROM user WHERE username=?",(x[0],)).fetchone())[0]
+        if lc == L:
+            userDict[x[0]]= ( get_db().execute("SELECT name FROM sell WHERE sellerUsername = ?", (x[0],)).fetchall() )
     g.uDict = userDict
     # print(userDict)
     return render_template("buyer/order.html")
@@ -58,7 +69,7 @@ def order():
 def menu(uname):
     db= get_db()
     g.seller = uname
-    g.userDish = (  get_db().execute("SELECT * FROM item WHERE sellerUsername=?", (uname,) ).fetchall() )
+    g.userDish = (  get_db().execute("SELECT * FROM sell WHERE sellerUsername=?", (uname,) ).fetchall() )
     if request.method == "POST" :
         dishes = request.form.getlist('name')
         buyerName = g.user["username"]
@@ -66,11 +77,34 @@ def menu(uname):
         status = "Pending"
         time = 1 #get time using python date and time
         date = 1 #get date "   "
-        total_cost = 1
-        quantity =1 
+        total_cost = 0
+        quantity = request.form["qty"]
+        quantity = int(quantity)
+        # print(quantity)
+        fl = 0
+        for x in dishes:
+            Qt = (db.execute("SELECT qAvail FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
+            # print(Qt,quantity,fl)
+            if Qt < quantity:
+                fl = 1
+        # quantity = int(quantity)
+        # print(fl)       
+        if fl == 1:
+            return redirect(url_for("buyer.order"))            
+        
+        for x in dishes:
+            Qt = (db.execute("SELECT qAvail FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
+            Pr = (db.execute("SELECT price FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
+            print(Qt,Pr,x)
+            total_cost = total_cost + Qt*Pr
+            Qt = Qt-quantity
+            db.execute(
+                "UPDATE sell SET qAvail=? WHERE sellerUsername=? and name=?",(Qt,uname,x)
+            )
+
         db.execute(
             "INSERT INTO orderhistory (buyerName,sellerName,status,price,date,time) VALUES (?,?,?,?,?,?)",
-            (buyerName,sellerName,status,total_cost,time,date)
+            (buyerName,sellerName,status,total_cost,date,time)
         )
         db.commit()
         bid = (db.execute("SELECT max(orderid) FROM orderhistory").fetchone())
@@ -108,8 +142,11 @@ def joinMeal():
     db = get_db()
     userList = ( db.execute("SELECT username FROM user", ).fetchall() )
     userDict = {}
+    lc = (db.execute("SELECT locality FROM user WHERE username=?",(g.user["username"],)).fetchone())[0]
     for x in userList:
-        userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(x[0],)).fetchall())
+        L = (db.execute("SELECT locality FROM user WHERE username=?",(x[0],)).fetchone())[0]
+        if lc == L:
+            userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(x[0],)).fetchall())
     g.mealDict = userDict
     return render_template("buyer/joinMeal.html")
 
