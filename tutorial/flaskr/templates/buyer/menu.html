@@ -8,9 +8,11 @@
 	<form method="post">
 		{%	for item in g.userDish	%}
 			<li>
-		        <label> {{item.name}} {{item.price}}  {{item.description}}  {{item.type}}<input type="checkbox" name="name"  value={{item.name}} > </label>
+		        <label> {{item.name}} {{item.price}} {{item.qAvail}} {{item.description}}  {{item.type}}<input type="checkbox" name="name"  value={{item.name}} > </label>
 			</li>
 		 {%	endfor	%}
+	<label for="qty">Quantity</label>
+	<input type="number" name="qty" value="qty">
 	<input type="submit" value="Confirm buying">
 	</form>
 {% endblock %}
