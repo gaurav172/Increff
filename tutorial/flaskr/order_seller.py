@@ -1,5 +1,5 @@
 import functools
-
+import time 
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -46,6 +46,10 @@ def load_logged_in_user():
 @bp.route('/View')
 def view():
     db = get_db()
+    tm =time.time()
+    db.execute( "UPDATE orderhistory SET STATUS='Completed' WHERE  endTime < ? ",(tm,)
+     )
+    db.commit()
     g.orderList = (db.execute("SELECT * FROM orderhistory WHERE sellername = ?",(g.user["username"],)))
     return render_template("order_sell/view.html")
 

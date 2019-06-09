@@ -9,16 +9,16 @@
         <div><li style="float:left;font-size:120%"><a href="{{ url_for('index') }}">FoodCreff</a></div>
         <div><li><a href="{{ url_for('auth.logout') }}">Log Out</a></div>
         <div><li><a href="{{ url_for('auth.profile') }}">Profile</a></div>
-        <div><li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a></div>
         <div><li><a href="{{ url_for('dish.addDish') }}">Add Dish</a></div>
-        <div><li><a href="{{ url_for('dish.salelist') }}">My Items on sale</a></div>
+        <div><li><a href="{{ url_for('dish.mydishes') }}">My Dishes</a></div>
+        <div><li><a href="{{ url_for('dish.sell') }}">Sell Items</a></div>
+        <div><li><a href="{{ url_for('dish.salelist') }}">Items On Sale</a></div>
         <div><li><a href="{{ url_for('dish.mealInvites') }}">Meal Invite</a></div>
-        <div><li><a href="{{ url_for('dish.sell') }}">Sell items</a></div>
-        <div><li><a href="{{ url_for('buyer.order') }}">Order</a></div>
         <div><li><a href="{{ url_for('buyer.joinMeal') }}">Join Meal</a></div>
         <div><li><a href="{{ url_for('order_buyer.myMeal') }}">My Meals</a></div>
-        <div><li><a href="{{ url_for('order_buyer.view') }}">my_bought_orders</a></div>
-        <div><li><a href="{{ url_for('order_seller.view') }}">my pending orders</a> </li></div>
+        <div><li><a href="{{ url_for('buyer.order') }}">Order</a></div>
+        <div><li><a href="{{ url_for('order_buyer.view') }}">Orders Placed</a></div>
+        <div><li><a href="{{ url_for('order_seller.view') }}">Order Notification</a> </li></div>
     {% else %}
       <div><li><a href="{{ url_for('auth.register') }}">Register</a></div>
       <div><li><a href="{{ url_for('auth.login') }}">Log In</a></div>

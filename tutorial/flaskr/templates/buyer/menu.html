@@ -8,7 +8,6 @@
 	<div class="forms">
 	<form method="post">
 		{%	for item in g.userDish	%}
-        <label for="name"> {{item.name}} Rs.{{item.price}} </label>	<input id="name" type="checkbox" name="name"  value={{item.name}} >
 		    <label> {{item.name}} {{item.price}} {{item.qAvail}} {{item.description}}  {{item.type}}<input type="checkbox" name="name"  value={{item.name}} > </label>
 		 {%	endfor	%}
 	<label for="qty">Quantity</label>

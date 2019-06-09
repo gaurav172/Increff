@@ -1,5 +1,5 @@
 import functools
-
+import time
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -8,6 +8,7 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
+
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
@@ -77,7 +78,6 @@ def sell():
         etime = request.form["etime"]
         print(dishes)
         for x in dishes:       
-            print(x)
             price= ( db.execute("SELECT price FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
             description= ( db.execute("SELECT description FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
             typ= ( db.execute("SELECT type FROM item WHERE sellerUsername = ? and name = ? ", (g.user["username"],x)).fetchone() )
@@ -86,7 +86,7 @@ def sell():
             typ=typ[0]
             db.execute(
                 "INSERT INTO sell (name,sellerUsername,price,qAvail,readyTime,sellingTill,description,type) VALUES (?,?,?,?,?,?,?,?)",
-                (x,g.user['username'],price,quantity,etime,stime,description,typ)
+                (x,g.user['username'],price,quantity,stime,etime,description,typ)
             )
             db.commit()
         return redirect(url_for("dish.salelist"))
@@ -96,8 +96,8 @@ def sell():
 @bp.route("/salelist")
 def salelist():
     db = get_db()
-    g.sellList = ( get_db().execute("SELECT * FROM sell WHERE sellerUsername = ?", (g.user["username"],)).fetchall() )
-    print(g.sellList)
+    tm = time.time()
+    g.sellList = ( get_db().execute("SELECT * FROM sell WHERE sellerUsername = ? and ? < sellingTill", (g.user["username"],tm,)).fetchall() )
     return render_template("dish/salelist.html")
 
 
@@ -105,7 +105,8 @@ def salelist():
 @bp.route("/mealInvites")
 def mealInvites():
     db = get_db()
-    g.menuList = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(g.user["username"],)).fetchall())
+    tm = time.time()
+    g.menuList = (db.execute("SELECT * FROM meal WHERE inviterName = ? and ? < endTime ",(g.user["username"],tm)).fetchall())
     return render_template("dish/mealInvites.html")
 
 

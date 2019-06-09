@@ -44,6 +44,7 @@ def load_logged_in_user():
 @bp.route("/order",methods=("GET","POST"))
 def order():
     db = get_db()
+    tm =time.time()
     userList = ( get_db().execute("SELECT username FROM user", ).fetchall() )
     userDict = {}
     lc = (db.execute("SELECT locality FROM user WHERE username=?",(g.user["username"],)).fetchone())[0]
@@ -60,7 +61,7 @@ def order():
     for x in userList:
         L = (db.execute("SELECT locality FROM user WHERE username=?",(x[0],)).fetchone())[0]
         if lc == L:
-            userDict[x[0]]= ( get_db().execute("SELECT name FROM sell WHERE sellerUsername = ?", (x[0],)).fetchall() )
+            userDict[x[0]]= ( get_db().execute("SELECT name FROM sell WHERE sellerUsername = ? and ? < sellingTill", (x[0],tm,)).fetchall() )
     g.uDict = userDict
     # print(userDict)
     return render_template("buyer/order.html")
@@ -69,14 +70,13 @@ def order():
 def menu(uname):
     db= get_db()
     g.seller = uname
-    g.userDish = (  get_db().execute("SELECT * FROM sell WHERE sellerUsername=?", (uname,) ).fetchall() )
+    tm =time.time()
+    g.userDish = (  get_db().execute("SELECT * FROM sell WHERE sellerUsername=? and ? < sellingTill", (uname,tm,) ).fetchall() )
     if request.method == "POST" :
         dishes = request.form.getlist('name')
         buyerName = g.user["username"]
         sellerName = uname
         status = "Pending"
-        time = 1 #get time using python date and time
-        date = 1 #get date "   "
         total_cost = 0
         quantity = request.form["qty"]
         quantity = int(quantity)
@@ -89,14 +89,15 @@ def menu(uname):
                 fl = 1
         # quantity = int(quantity)
         # print(fl)
-        if len(dishes) == 0:
-            alert("Select Atleast 1 food item")       
         if fl == 1:
-            alert("Not in stock")
+            return redirect(url_for("buyer.order"))
 
+        mx = 0
         for x in dishes:
             Qt = (db.execute("SELECT qAvail FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
             Pr = (db.execute("SELECT price FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
+            P = (db.execute("SELECT sellingTill FROM sell WHERE sellerUsername=? and name =?",(uname,x)).fetchone())[0]
+            mx=max(mx,P)
             print(Qt,Pr,x)
             total_cost = total_cost + quantity*Pr
             Qt = Qt-quantity
@@ -105,8 +106,8 @@ def menu(uname):
             )
 
         db.execute(
-            "INSERT INTO orderhistory (buyerName,sellerName,status,price,date,time) VALUES (?,?,?,?,?,?)",
-            (buyerName,sellerName,status,total_cost,date,time)
+            "INSERT INTO orderhistory (buyerName,sellerName,status,price,endTime,time) VALUES (?,?,?,?,?,?)",
+            (buyerName,sellerName,status,total_cost,mx,tm)
         )
         db.commit()
         bid = (db.execute("SELECT max(orderid) FROM orderhistory").fetchone())
@@ -150,13 +151,14 @@ def meal(id):
 @bp.route("/joinMeal")
 def joinMeal():
     db = get_db()
+    tm=time.time()
     userList = ( db.execute("SELECT username FROM user", ).fetchall() )
     userDict = {}
     lc = (db.execute("SELECT locality FROM user WHERE username=?",(g.user["username"],)).fetchone())[0]
     for x in userList:
         L = (db.execute("SELECT locality FROM user WHERE username=?",(x[0],)).fetchone())[0]
         if lc == L:
-            userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(x[0],)).fetchall())
+            userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ? and ? < endTime",(x[0],tm)).fetchall())
     g.mealDict = userDict
     return render_template("buyer/joinMeal.html")
 

@@ -41,7 +41,7 @@ CREATE TABLE sell (
   readyTime INTEGER,
   sellingTill INTEGER,
   description TEXT,
-  type TEXT,
+  type TEXT
 );
 
 CREATE TABLE meal (
@@ -67,6 +67,7 @@ CREATE TABLE orderhistory(
   sellerName TEXT NOT NULL,
   status TEXT NOT NULL,
   price TEXT NOT NULL,
+  endTime INTEGER NOT NULL,
   time INTEGER NOT NULL
 );
 
