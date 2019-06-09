@@ -88,15 +88,17 @@ def menu(uname):
             if Qt < quantity:
                 fl = 1
         # quantity = int(quantity)
-        # print(fl)       
+        # print(fl)
+        if len(dishes) == 0:
+            alert("Select Atleast 1 food item")       
         if fl == 1:
-            return redirect(url_for("buyer.order"))            
-        
+            alert("Not in stock")
+
         for x in dishes:
             Qt = (db.execute("SELECT qAvail FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
             Pr = (db.execute("SELECT price FROM sell WHERE sellerUsername=? and name=?",(uname,x)).fetchone())[0]
             print(Qt,Pr,x)
-            total_cost = total_cost + Qt*Pr
+            total_cost = total_cost + quantity*Pr
             Qt = Qt-quantity
             db.execute(
                 "UPDATE sell SET qAvail=? WHERE sellerUsername=? and name=?",(Qt,uname,x)
@@ -127,9 +129,17 @@ def meal(id):
         seats = request.form["seats"]
         db = get_db()
         ml = (db.execute("SELECT * FROM meal WHERE buffetNo=?",(id,)).fetchone())
+        seats = int(seats)
+        if seats > ml["seatAvail"]:
+            return redirect(url_for('buyer.meal',id=id))            
         db.execute(
             "INSERT INTO buffethistory (invName,joName,total,price,date,time) VALUES (?,?,?,?,?,?)",
             (ml["inviterName"],g.user["username"],seats,int(seats)*int(ml["price"]),"date","time")
+        )
+        db.commit()
+        st = ml["seatAvail"]-seats
+        db.execute(
+            "UPDATE meal SET seatAvail = ? WHERE buffetNo=?",(st,ml["buffetNo"])
         )
         db.commit()
     db = get_db()
@@ -149,4 +159,10 @@ def joinMeal():
             userDict[x[0]] = (db.execute("SELECT * FROM meal WHERE inviterName = ?",(x[0],)).fetchall())
     g.mealDict = userDict
     return render_template("buyer/joinMeal.html")
+
+@bp.route("/myMeal")
+def myMeal():
+    g.myMeals = (db.execute("SELECT * FROM buffethistory WHERE joName=?"),(g.user["username"]).fetchall())
+    return "MEal"
+    return render_template("buyer/myMeals.html")
 

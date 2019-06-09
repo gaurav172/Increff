@@ -89,7 +89,7 @@ def sell():
                 (x,g.user['username'],price,quantity,etime,stime,description,typ)
             )
             db.commit()
-        return redirect(url_for("dish.sell"))
+        return redirect(url_for("dish.salelist"))
     return render_template("dish/sell.html")    
 
 
@@ -148,4 +148,5 @@ def addInvite():
                 (bid,x,tp)
             )
             db.commit()
+        return redirect('mealInvites')
     return render_template("dish/addInvite.html")

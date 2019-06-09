@@ -56,3 +56,9 @@ def details(id):
     g.orderDetail=  db.execute("SELECT * FROM orderdish WHERE orderid=?", (id,)).fetchall()
     print(g.orderDetail)
     return render_template("order_buy/details.html")
+
+@bp.route("/myMeal")
+def myMeal():
+    db = get_db()
+    g.myMeals = (db.execute("SELECT * FROM buffethistory WHERE joName=?",(g.user["username"],)).fetchall())
+    return render_template("buyer/myMeals.html")
